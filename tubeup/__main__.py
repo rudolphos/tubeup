@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# tubeup.py - Download a video using youtube-dl and upload to the Internet Archive with metadata
+# tubeup.py - Download a video using youtube-dl and upload to Dailymotion with metadata
 
 # Copyright (C) 2016 Bibliotheca Anonoma
 # This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import internetarchive
 import internetarchive.cli
 import logging
 
-__doc__ = """tubeup - Download a video with Youtube-dl, then upload to Internet Archive, passing all metadata.
+__doc__ = """tubeup - Download a video with Youtube-dl, then upload to dailymotion, passing all metadata.
 
 Usage:
   tubeup <url>... [--metadata=<key:value>...]
@@ -68,12 +68,12 @@ class MyLogger(object):
 # equivalent of youtube-dl --title --continue --retries 9001 --fragment-retries 9001 --write-info-json --write-description --write-thumbnail --write-annotations --all-subs --ignore-errors --convert-subs 'srt' --no-overwrites --prefer-ffmpeg --call-home URL 
 # uses downloads/ folder and safe title in output template
 def download(URLs, proxy_url):
-    mkdirs(os.path.expanduser('~/.tubeup'))
-    mkdirs(os.path.expanduser('~/.tubeup/downloads'))
+    mkdirs(os.path.expanduser('~/.DMArchive'))
+    mkdirs(os.path.expanduser('~/.DMArchive/downloads'))
     
     ydl_opts = {
-        'outtmpl': os.path.expanduser('~/.tubeup/downloads/%(title)s-%(id)s.%(ext)s'),
-        'download_archive': os.path.expanduser('~/.tubeup/.ytdlarchive'), ## I guess we will avoid doing this because it prevents failed uploads from being redone in our current system. Maybe when we turn it into an OOP library?
+        'outtmpl': os.path.expanduser('~/.DMArchive/downloads/%(title)s-%(id)s.%(ext)s'),
+        'download_archive': os.path.expanduser('~/.DMArchive/.ytdlarchive'), ## I guess we will avoid doing this because it prevents failed uploads from being redone in our current system. Maybe when we turn it into an OOP library?
         'restrictfilenames': True,
         'verbose': True,		## We only care about errors not successes, anything else is pollution
         'progress_with_newline': True,
